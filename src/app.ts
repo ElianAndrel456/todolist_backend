@@ -8,7 +8,8 @@ const app = express();
 app.set("PORT", process.env.PORT || 3000);
 app.use(
   cors({
-    origin: "*",
+    origin:
+      "https://todolist-frontend-3hsji3w94-elianandrel456s-projects.vercel.app/",
   })
 );
 app.use(express.json());
