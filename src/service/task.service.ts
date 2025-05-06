@@ -1,11 +1,11 @@
-import { ITaskCreate } from "../models/task.model";
 import { taskRepository } from "../repositories/task.repository";
+import { TaskCreate } from "../schema/request/task.create.schema";
 
 export class TaskService {
-  static async getAllTasks(userId: string) {
+  static async getAllTasks() {
     const tasks = await taskRepository.find({
-      where: {
-        userId,
+      order: {
+        created_a: "DESC",
       },
     });
     return tasks;
@@ -16,16 +16,17 @@ export class TaskService {
     return task;
   }
 
-  static async createTask(task: ITaskCreate) {
+  static async createTask(task: TaskCreate) {
     try {
       const newTask = taskRepository.create(task);
       await taskRepository.save(newTask);
       return newTask;
     } catch (error) {
+      console.error("Error creating task:", error);
       throw new Error("Error creating task");
     }
   }
-  static async updateTask(id: number, task: ITaskCreate) {
+  static async updateTask(id: number, task: TaskCreate) {
     await taskRepository.update(id, task);
     const updatedTask = await taskRepository.findOneBy({ id });
     return updatedTask;

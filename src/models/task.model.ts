@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
+import { TaskCreate } from "../schema/request/task.create.schema";
 
 export enum priorityE {
   LOW = "low",
@@ -6,18 +13,8 @@ export enum priorityE {
   HIGH = "high",
 }
 
-export interface ITaskCreate {
-  title: string;
-  completed: boolean;
-  userId: string;
-  dueDate: Date;
-  priority: priorityE;
-  description?: string;
-  parentId?: number;
-}
-
 @Entity()
-export class Task implements ITaskCreate {
+export class Task implements TaskCreate {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -28,15 +25,10 @@ export class Task implements ITaskCreate {
   completed!: boolean;
 
   @Column({
-    nullable: false,
-  })
-  userId!: string;
-
-  @Column({
     nullable: true,
     type: "timestamp",
   })
-  dueDate!: Date;
+  dueDate!: Date | null;
 
   @Column({
     type: "enum",
@@ -51,8 +43,9 @@ export class Task implements ITaskCreate {
   })
   description?: string;
 
-  @Column({
-    nullable: true,
-  })
-  parentId?: number;
+  @CreateDateColumn()
+  created_a!: Date;
+
+  @UpdateDateColumn()
+  updated_at!: Date;
 }

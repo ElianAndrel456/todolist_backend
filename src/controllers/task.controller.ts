@@ -4,13 +4,7 @@ import { TaskService } from "../service/task.service";
 export class TaskController {
   static async get(req: Request, res: Response) {
     try {
-      const userId = req.query.userId as string;
-      if (!userId) {
-        res.status(400).json({ message: "User ID is required" });
-        return;
-      }
-
-      const tasks = await TaskService.getAllTasks(userId);
+      const tasks = await TaskService.getAllTasks();
 
       res.status(200).json(tasks);
     } catch (error) {
@@ -31,6 +25,7 @@ export class TaskController {
 
   static async create(req: Request, res: Response) {
     try {
+      console.log(req.body);
       const task = await TaskService.createTask(req.body);
       res.status(201).json(task);
     } catch (error) {
