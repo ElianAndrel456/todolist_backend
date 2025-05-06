@@ -12,7 +12,7 @@ This is a simple task list application built with Node.js, Express, and MySQL. I
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ElianAndrel456/todolist_backend.git
    ```
 2. Install dependencies:
 
